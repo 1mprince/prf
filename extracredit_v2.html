@@ -1,0 +1,666 @@
+<!-- 
+    Program name: extracredit.html
+    Author: Immanuel Prince
+    Date created: 8-12-2024
+    Date last edited: 8-12-2024
+    Version: 2.0
+    Description: MIS 7375 Homework - Patient Registration Form. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Patient Registration Form</title>
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" href="extracredit_v2.css">
+    </head>
+    <body>
+        <header class="sticky-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <img id="logo" src="logo.svg" alt="Hospital Logo">
+                    <div class="hospital-info">
+                        <h1>Wellness General Hospital</h1>
+                        <p>24/7 Care for Your Family, Generations of Trust</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="svg-container">
+                        <svg
+                            version="1.1"
+                            id="ekg_svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            x="0px"
+                            y="0px"
+                            width="200px"
+                            height="100px"
+                            viewBox="0 0 500 200"
+                            style="enable-background:new 0 0 500 200;"
+                            xml:space="preserve"
+                        >
+                            <g>
+                                <polyline class="ekg" points="486.6,113.8 328.2,113.8 310.3,132.3 296,70.7 246.8,127.4 241.6,120.2 233.9,166.4 227,27.6 213.2,118.3 211.8,112.3 205.1,126.1 198.2,108.5 194.1,124.4 184.5,92.9 174.1,113 4.3,113"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="capsWarning" class="caps-warning">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+                Caps Lock is ON!
+            </div>
+        </header>
+        <div class="info-section">
+            <div class="info-header">
+                <button class="collapsible">More Info</button>
+            </div>
+            <div class="collapsible-content">
+                <br>
+                <a style="text-decoration: none; color: #007bff" href="privacy-policy.html">Privacy Policy</a>
+                <br>
+                <br>
+                <a style="text-decoration: none; color: #007bff" href="terms-of-service.html">Terms of Service</a>
+                <br>
+            </div>
+        </div>
+        <div id="serving-since">
+            Caring for you for
+            <span id="timeActive"></span>
+            days as of
+            <span id="dateToday"></span>
+        </div>
+        <section id="registration-box">
+            <div id="welcome-section" class="welcome d-none">
+                <span id="welcome-message"></span>
+                <div class="right">
+                    <button id="reset-cookie" class="btn-sm">Start as a new User</button>
+                </div>
+            </div>
+            <form name="register" id="register" action="thank-you.html">
+                <h1 class="centered">Patient Registration Form</h1>
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-user icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement"
+                                    id="firstName"
+                                    name="firstName"
+                                    required
+                                    placeholder="John"
+                                    maxlength="30"
+                                >
+                            </div>
+                            <span id="firstNameError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="middleName">Middle Initial:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-user icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement"
+                                    id="middleName"
+                                    name="middleName"
+                                    maxlength="1"
+                                    placeholder="M"
+                                >
+                            </div>
+                            <span id="middleNameError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-user icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement"
+                                    id="lastName"
+                                    name="lastName"
+                                    required
+                                    maxlength="30"
+                                    placeholder="Doe"
+                                >
+                            </div>
+                            <span id="lastNameError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input
+                                type="date"
+                                class="formElement"
+                                id="dob"
+                                name="dob"
+                                required
+                            >
+                            <span id="dobError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Sex:</label>
+                            <select
+                                class="formElement"
+                                id="gender"
+                                name="gender"
+                                required
+                            >
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <span id="genderError" class="error-message"></span>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="address">Address:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="address"
+                                name="address"
+                                required
+                                placeholder="123 Main St"
+                                maxlength="30"
+                            >
+                            <span id="addressError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="city"
+                                name="city"
+                                required
+                                placeholder="Houston"
+                                maxlength="30"
+                            >
+                            <span id="cityError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <select
+                                class="formElement"
+                                id="state"
+                                name="state"
+                                required
+                            >
+                                <option value="">Please Click to Select</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                            <span id="stateError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">Zip:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="zip"
+                                name="zip"
+                                required
+                                placeholder="77001"
+                                maxlength="10"
+                            >
+                            <span id="zipError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-phone icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement phone"
+                                    id="phone"
+                                    name="phone"
+                                    required
+                                    placeholder="(XXX)-XXX-XXXX"
+                                    maxlength="14"
+                                >
+                            </div>
+                            <span id="phoneError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-envelope icon"></i>
+                                <input
+                                    type="email"
+                                    class="formElement"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    placeholder="john.doe@example.com"
+                                >
+                            </div>
+                            <span id="emailError" class="error-message"></span>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="ssn">Social Security Number:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-lock icon"></i>
+                                <input
+                                    type="password"
+                                    class="formElement"
+                                    id="ssn"
+                                    name="ssn"
+                                    required
+                                    placeholder="XXX-XX-XXXX"
+                                >
+                            </div>
+                            <span id="ssnError" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Emergency Contact -->
+                <div class="form-section">
+                    <h2>Emergency Contact Information</h2>
+                    <label class="question-label">Add an emergency contact?</label>
+                    <div class="radio-group">
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="emergencyContact"
+                                value="yes"
+                                checked
+                            >
+                            <span class="radio-mark"></span>
+                            Yes
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="emergencyContact" value="no">
+                            <span class="radio-mark"></span>
+                            No
+                        </label>
+                    </div>
+                    <div id="emergencyContactFields" class="form-grid">
+                        <div class="form-group">
+                            <label for="emergencyName">Contact Name:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="emergencyName"
+                                name="emergencyName"
+                                placeholder="Optional"
+                            >
+                            <span id="emergencyNameError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergencyPhone">Contact Phone:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-phone icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement phone"
+                                    id="emergencyPhone"
+                                    name="emergencyPhone"
+                                    placeholder="(XXX)-XXX-XXXX"
+                                    maxlength="14"
+                                >
+                            </div>
+                            <span id="emergencyPhoneError" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Insurance -->
+                <div class="form-section">
+                    <h2>Insurance Information</h2>
+                    <label class="question-label">Do you have Insurance?</label>
+                    <div class="radio-group">
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="insurance"
+                                value="yes"
+                                checked
+                            >
+                            <span class="radio-mark"></span>
+                            Yes
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="insurance" value="no">
+                            <span class="radio-mark"></span>
+                            No
+                        </label>
+                    </div>
+                    <div id="insuranceFields" class="form-grid">
+                        <div class="form-group">
+                            <label for="insuranceProvider">Insurance Provider:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="insuranceProvider"
+                                name="insuranceProvider"
+                                placeholder="Optional"
+                            >
+                            <span id="insuranceProviderError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="policyNumber">Policy Number:</label>
+                            <input
+                                type="text"
+                                class="formElement"
+                                id="policyNumber"
+                                name="policyNumber"
+                                placeholder="Optional"
+                            >
+                            <span id="policyNumberError" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Medical History -->
+                <div class="form-section">
+                    <h2>Medical History</h2>
+                    <div class="form-group full-width">
+                        <label for="medicalHistory">Describe your medical history (allergies, medications):</label>
+                        <textarea
+                            class="formElement"
+                            id="medicalHistory"
+                            name="medicalHistory"
+                            rows="4"
+                        ></textarea>
+                        <span id="medicalHistoryError" class="error-message"></span>
+                    </div>
+                    <div class="form-group slider-group">
+                        <label for="allergies">Allergies severity:</label>
+                        <div class="slider-container">
+                            <span>None</span>
+                            <input
+                                type="range"
+                                class="formElement slider"
+                                id="allergies"
+                                name="allergies"
+                                min="0"
+                                max="10"
+                                value="0"
+                            >
+                            <span>
+                                Extreme (
+                                <span id="allergiesValue">0</span>)</span>
+                        </div>
+                        <span id="allergiesError" class="error-message"></span>
+                    </div>
+                    <div class="form-group toggle-group full-width">
+                        <label>Have you had any of the following?</label>
+                        <div class="toggles-container">
+                            <label class="toggle-switch">
+                                <span>Chicken Pox</span>
+                                <input type="checkbox" name="chickenPox">
+                                <span class="slider-toggle"></span>
+                            </label>
+                            <label class="toggle-switch">
+                                <span>Measles</span>
+                                <input type="checkbox" name="measles">
+                                <span class="slider-toggle"></span>
+                            </label>
+                            <label class="toggle-switch">
+                                <span>Covid-19</span>
+                                <input type="checkbox" name="covid">
+                                <span class="slider-toggle"></span>
+                            </label>
+                            <label class="toggle-switch">
+                                <span>Small Pox</span>
+                                <input type="checkbox" name="smallPox">
+                                <span class="slider-toggle"></span>
+                            </label>
+                            <label class="toggle-switch">
+                                <span>Tetanus</span>
+                                <input type="checkbox" name="tetanus">
+                                <span class="slider-toggle"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reason for Visit -->
+                <div class="form-section">
+                    <h2>Reason for Visit</h2>
+                    <div class="form-group full-width">
+                        <label for="visitReason">Reason for today's visit:</label>
+                        <textarea
+                            class="formElement"
+                            id="visitReason"
+                            name="visitReason"
+                            rows="4"
+                        ></textarea>
+                        <span id="visitReasonError" class="error-message"></span>
+                    </div>
+                    <div class="form-group slider-group">
+                        <label for="feeling">Pain level:</label>
+                        <div class="slider-container">
+                            <span>None</span>
+                            <input
+                                type="range"
+                                class="formElement slider"
+                                id="feeling"
+                                name="feeling"
+                                min="0"
+                                max="10"
+                                value="0"
+                            >
+                            <span>
+                                Extreme (
+                                <span id="feelingValue">0</span>)</span>
+                        </div>
+                        <span id="feelingError" class="error-message"></span>
+                    </div>
+                </div>
+                <!-- Login Information -->
+                <div class="form-section">
+                    <h2>Login Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userId">User Id:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-user-tag icon"></i>
+                                <input
+                                    type="text"
+                                    class="formElement"
+                                    id="userId"
+                                    name="userId"
+                                    required
+                                    placeholder="username"
+                                    maxlength="30"
+                                >
+                            </div>
+                            <span id="userIdError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-key icon"></i>
+                                <input
+                                    type="password"
+                                    class="formElement"
+                                    id="password"
+                                    name="password"
+                                    required
+                                    placeholder="At least 8 chars"
+                                >
+                            </div>
+                            <span id="passwordError" class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="matchPassword">Re-enter Password:</label>
+                            <div class="input-icon-container">
+                                <i class="fa-solid fa-key icon"></i>
+                                <input
+                                    type="password"
+                                    class="formElement"
+                                    id="matchPassword"
+                                    name="matchPassword"
+                                    required
+                                    placeholder="Match password"
+                                >
+                            </div>
+                            <span id="matchPasswordError" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <input
+                    type="hidden"
+                    id="token"
+                    name="token"
+                    value=""
+                >
+                <div class="form-section centered">
+                    <label class="toggle-switch-label">
+                        <span>Consent to data processing</span>
+                        <label class="toggle-switch">
+                            <input
+                                id="consent"
+                                type="checkbox"
+                                name="consent"
+                                required
+                            >
+                            <span class="slider-toggle"></span>
+                        </label>
+                    </label>
+                    <label class="toggle-switch-label">
+                        <span>Remember Me</span>
+                        <label class="toggle-switch">
+                            <input
+                                id="rememberMe"
+                                type="checkbox"
+                                name="rememberMe"
+                                checked
+                            >
+                            <span class="slider-toggle"></span>
+                        </label>
+                    </label>
+                </div>
+                <div class="form-footer">
+                    <button id="resetButton" type="reset">Clear & Start Over</button>
+                    <button id="reviewButton" type="button">Review & Submit</button>
+                    <button id="submitButton" type="submit" class="disabled">Submit Registration</button>
+                </div>
+            </form>
+        </section>
+        <!-- Modal for Review -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <button id="close" class="btn-sm">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Go Back
+                </button>
+                <h2 class="centered">Review Your Entries</h2>
+                <table id="reviewTable" class="reviewTable">
+                    <tbody id="reviewFields"></tbody>
+                </table>
+                <div id="consentDiv" class="centered d-none">
+                    <label class="toggle-switch-label">
+                        <span>I have reviewed the info & consent</span>
+                        <label class="toggle-switch">
+                            <input id="reviewConsent" type="checkbox">
+                            <span class="slider-toggle"></span>
+                        </label>
+                    </label>
+                </div>
+                <div class="right">
+                    <button id="reviewSubmitButton" type="submit" class="disabled right">Submit Registration</button>
+                </div>
+            </div>
+        </div>
+        <!-- Slideshow -->
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/2tgF5L8-6Wk?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1"
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <div class="mySlides fade">
+                <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/Y1CQ2GYtx_o?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1"
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <div class="mySlides fade">
+                <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/8XXDMLZuj9c?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1"
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <!-- Add more slides if desired -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <footer>
+            <p>&copy; 2024 Wellness General Hospital. All rights reserved.</p>
+            <p>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                |
+                <a href="terms-of-service.html">Terms of Service</a>
+            </p>
+            <p>
+                Contact:
+                <a href="mailto:info@wellnessgeneralhospital.com">info@wellnessgeneralhospital.com</a>
+            </p>
+        </footer>
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfjrJUqAAAAAJd0UECLz_HgcFV7Q9l2j1pcNBf2"></script>
+        <script src="extracredit_v2.js"></script>
+    </body>
+</html>
